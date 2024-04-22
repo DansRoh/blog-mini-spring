@@ -50,4 +50,13 @@ public class UserController {
         }
         return Result.error("密码错误");
     }
+
+    @GetMapping("/userInfo")
+    public Result<User> userInfo(@RequestHeader(name = "Authorization") String token) {
+        Map<String, Object> claims = JwtUtil.parseToken(token);
+        String username = (String) claims.get("username");
+
+        User user = userService.findByUserName(username);
+        return Result.success(user);
+    }
 }
