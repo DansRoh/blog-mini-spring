@@ -22,9 +22,11 @@ public interface UserMapper {
     @Update("update user set nickname=#{nickname},email=#{email},update_time=#{updateTime} where id =#{id}")
     void update(User user);
 
+    // 更新用户头像
     @Update("update user set user_pic=#{avatarUrl}, update_time=now() where id=#{id}")
     void updateAvatar(String avatarUrl, Integer id);
 
+    // 更新用户密码
     @Update("update user set password=#{md5String},update_time=now() where id=#{id}")
     void updatePwd(String md5String, Integer id);
 }
