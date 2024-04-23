@@ -15,4 +15,8 @@ public interface CategoryService {
 
     // 根据id删除分类
     Integer deleteIfFound(Integer id);
+
+    void update(Category category);
+
+    Category findByCategoryNameExcludeSelf(Category category);
 }

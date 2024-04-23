@@ -17,15 +17,15 @@ public class CategoryController {
     private CategoryService categoryService;
 
     // 获取所有分类列表
-    @GetMapping("/list")
+    @GetMapping()
     public Result<List<Category>> list() {
         List<Category> allCategory = categoryService.findAll();
         return Result.success(allCategory);
     }
 
     // 添加分类
-    @PostMapping("/add")
-    public Result<String> add(@RequestBody @Validated Category category) {
+    @PostMapping()
+    public Result<String> add(@RequestBody @Validated(Category.Add.class) Category category) {
 
         // 查询是否有相同的分类名
         Category category1 = categoryService.findByCategoryName(category.getCategoryName());
@@ -37,8 +37,21 @@ public class CategoryController {
         return Result.success();
     }
 
+    // 更新分类
+    @PutMapping()
+    public Result<String> update(@RequestBody @Validated(Category.Update.class) Category category) {
+        // 查询是否有相同的分类名
+        Category category1 = categoryService.findByCategoryNameExcludeSelf(category);
+        if (category1 != null) {
+            return Result.error("分类名已经存在");
+        }
+
+        categoryService.update(category);
+        return Result.success();
+    }
+
     // 删除分类
-    @DeleteMapping("/delete")
+    @DeleteMapping()
     public Result<String> delete(@RequestParam Integer id) {
         try {
             int deletedRows = categoryService.deleteIfFound(id);

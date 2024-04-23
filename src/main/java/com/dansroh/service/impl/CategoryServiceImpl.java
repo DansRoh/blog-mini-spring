@@ -7,6 +7,7 @@ import com.dansroh.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -26,13 +27,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void add(Category category) {
         Map<String, Object> map = ThreadLocalUtil.get();
-        Integer id = (Integer) map.get("id");
+        Integer userId = (Integer) map.get("id");
         String username = (String) map.get("username");
-        String categoryName = category.getCategoryName();
-        String categoryAlias = category.getCategoryAlias();
 
+        category.setCreateTime(LocalDateTime.now());
+        category.setUpdateTime(LocalDateTime.now());
+        category.setCreateUserName(username);
+        category.setCreateUserId(userId);
 
-        categoryMapper.add(categoryName, id, username, categoryAlias);
+        categoryMapper.add(category);
     }
 
     @Override
@@ -43,5 +46,16 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Integer deleteIfFound(Integer id) {
         return categoryMapper.deleteIfFound(id);
+    }
+
+    @Override
+    public void update(Category category) {
+        category.setUpdateTime(LocalDateTime.now());
+        categoryMapper.update(category);
+    }
+
+    @Override
+    public Category findByCategoryNameExcludeSelf(Category category) {
+        return categoryMapper.findByCategoryNameExcludeSelf(category);
     }
 }
