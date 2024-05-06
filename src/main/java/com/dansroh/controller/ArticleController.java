@@ -16,6 +16,7 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    // 条件查询当前登陆用户下的文章
     @GetMapping()
     public Result<PageBean<Article>> list(
             Integer pageNum,
@@ -27,6 +28,7 @@ public class ArticleController {
         return Result.success(pb);
     }
 
+    // 新增文章
     @PostMapping()
     public Result<String> add(@RequestBody @Validated Article article) {
         articleService.add(article);
