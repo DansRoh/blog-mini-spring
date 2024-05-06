@@ -28,6 +28,18 @@ public class ArticleController {
         return Result.success(pb);
     }
 
+    // 条件查询所有文章
+    @GetMapping("all")
+    public Result<PageBean<Article>> all(
+            Integer pageNum,
+            Integer pageSize,
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) String state
+    ) {
+        PageBean<Article> pb = articleService.all(pageNum, pageSize, categoryId, state);
+        return Result.success(pb);
+    }
+
     // 新增文章
     @PostMapping()
     public Result<String> add(@RequestBody @Validated Article article) {

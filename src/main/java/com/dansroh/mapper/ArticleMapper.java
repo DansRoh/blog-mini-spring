@@ -13,6 +13,9 @@ public interface ArticleMapper {
     " values (#{title}, #{content}, #{coverImg}, #{state}, #{categoryId}, #{createUser}, now(), now())")
     void add(Article article);
 
-
+    // 查询当前登陆用户下的文章
     List<Article> list(Integer categoryId, String state, Integer userId);
+
+    // 查询所有文章
+    List<Article> all(Integer categoryId, String state);
 }

@@ -1,6 +1,5 @@
 package com.dansroh.interceptors;
 
-import com.dansroh.pojo.Result;
 import com.dansroh.utils.JwtUtil;
 import com.dansroh.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;

@@ -46,4 +46,21 @@ public class ArticleServiceImpl implements ArticleService {
         pb.setItems(page.getResult());
         return pb;
     }
+
+    @Override
+    public PageBean<Article> all(Integer pageNum, Integer pageSize, Integer categoryId, String state) {
+        // 创建PageBean对象
+        PageBean<Article> pb = new PageBean<>();
+
+        // 分页查询
+        PageHelper.startPage(pageNum, pageSize);
+        // 调用mapper
+        List<Article> as = articleMapper.all(categoryId, state);
+
+        Page<Article> page = (Page<Article>) as;
+
+        pb.setTotal(page.getTotal());
+        pb.setItems(page.getResult());
+        return pb;
+    }
 }
